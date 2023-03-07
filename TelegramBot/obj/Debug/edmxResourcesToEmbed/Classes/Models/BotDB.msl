@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище SirBor_TelegramBotModelContainer" CdmEntityContainer="BotEnt">
+    <EntitySetMapping Name="UserSelectedVoice">
+      <EntityTypeMapping TypeName="SirBor_TelegramBotModel.UserSelectedVoice">
+        <MappingFragment StoreEntitySet="UserSelectedVoice">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="VoiceId" ColumnName="VoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
