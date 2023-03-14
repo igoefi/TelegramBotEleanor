@@ -1,0 +1,200 @@
+﻿<Page x:Class="TelegramBot.Pages.AdminPanel.PageVoiceSettings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TelegramBot.Pages.AdminPanel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageVoiceSettings">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.RowSpan="2">
+            <TextBlock Text="Добавить"
+                       Foreground="White"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       FontSize="30"/>
+
+            <Grid
+                Margin="20,30,0,0">
+                <ComboBox Name="CmbBoxAllVoices"
+                          SelectionChanged="CmbBoxChangedAddVoice"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Width="100"
+                          MaxWidth="150"/>
+                <StackPanel
+                        HorizontalAlignment="Right"
+                    MaxWidth="200">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        FontSize="17">
+                        Название: <Run Name="RnVoiceName"/>
+                    </TextBlock>
+
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        FontSize="17"
+                        Margin="0,20,0,0">
+                        Озучиваемый язык: <Run Name="RnVoiceCulture"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <Button Click="BtnClickAddVoice"
+                BorderBrush="Transparent"
+                Width="100"
+                Height="30"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                Margin="10,0,0,20" Grid.Row="1">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle RadiusX="8"
+                                           RadiusY="5"
+                                           Fill="DarkGray">
+                        </Rectangle>
+                        <TextBlock Text="Добавить"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="Изменить"
+                       Foreground="White"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       FontSize="30"/>
+            <Grid
+                Margin="20,30,0,0">
+                <ComboBox Name="CmbBoxSavedVoices"
+                          SelectionChanged="CmbBoxChangedChangeVoice"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Width="100"
+                          MaxWidth="150"/>
+                <StackPanel
+                        HorizontalAlignment="Right"
+                    MaxWidth="200">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        FontSize="17">
+                        Название: <Run Name="RnSelectedVoiceName"/>
+                    </TextBlock>
+
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        FontSize="17"
+                        Margin="0,20,0,0">
+                        Озучиваемый язык: <Run Name="RnSelectedVoiceCulture"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Left">
+            <TextBlock
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        FontSize="17"
+                        Margin="0,20,0,0">
+                        Стоимость:
+            </TextBlock>
+            <TextBox
+                Name="TxbVoiceCost"
+                Background="#302550"
+                Foreground="White"
+                Margin="0,12,0,0"
+                
+                />
+        </StackPanel>
+
+        <StackPanel            
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"            
+                Grid.Row="1"
+                Grid.Column="1">
+        <Button Click="BtnClickDeleteVoice"
+                BorderBrush="Transparent"
+                Width="100"
+                Height="30"
+                Margin="0,0,10,20">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle RadiusX="8"
+                                           RadiusY="5"
+                                           Fill="DarkGray">
+                        </Rectangle>
+                        <TextBlock Text="Удалить голос"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+            
+        <Button Click="BtnClickSaveChanges"
+                BorderBrush="Transparent"
+                Width="100"
+                Height="30"
+                Margin="0,0,10,20">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle RadiusX="8"
+                                           RadiusY="5"
+                                           Fill="DarkGray">
+                        </Rectangle>
+                        <TextBlock Text="Сохранить"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="BtnClickGoBack"
+                BorderBrush="Transparent"
+                Width="100"
+                Height="30"
+                Margin="0,0,10,20">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle RadiusX="8"
+                                           RadiusY="5"
+                                           Fill="DarkGray">
+                        </Rectangle>
+                        <TextBlock Text="Назад"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        </StackPanel>
+    </Grid>
+</Page>

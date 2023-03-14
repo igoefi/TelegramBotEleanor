@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TelegramBot.Classes;
+using TelegramBot.Classes.Helper;
+using TelegramBot.Pages;
 
 namespace TelegramBot
 {
@@ -21,16 +23,24 @@ namespace TelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BotLogic _bot;
         public MainWindow()
         {
             InitializeComponent();
-            DBUserHelper.SelectUserVoice(1,"1");
+            FrameNav.FrameNavigation = FrmMain;
+            FrmMain.Navigate(new PageLogin());
         }
 
-        private void BtnClickStartBot(object sender, RoutedEventArgs e)
-        {
-            _bot = new BotLogic();
-        }
+        private void BtnClickExit(object sender, RoutedEventArgs e) =>
+            Application.Current.Shutdown();
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) =>
+            DragMove();
+
+        private void BtnClickHide(object sender, RoutedEventArgs e) =>
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+        private void BtnClickFullOpen(object sender, RoutedEventArgs e) =>
+            Application.Current.MainWindow.WindowState = Application.Current.MainWindow.WindowState == WindowState.Normal 
+            ? WindowState.Maximized : WindowState.Normal;
     }
 }

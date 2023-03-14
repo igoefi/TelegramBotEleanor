@@ -12,10 +12,10 @@ namespace TelegramBot.Classes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserSelectedVoice
+    public partial class ReferalCodes
     {
-        public int UserNum { get; set; }
-        public string VoiceId { get; set; }
-        public int UserID { get; set; }
+        public int Id { get; set; }
+        public string Code { get; set; }
+        public bool IsUsed { get; set; }
     }
 }

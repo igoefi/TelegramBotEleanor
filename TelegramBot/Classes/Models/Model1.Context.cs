@@ -25,7 +25,7 @@ namespace TelegramBot.Classes.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<UserSelectedVoice> UserSelectedVoice { get; set; }
+        public virtual DbSet<Admins> Admins { get; set; }
+        public virtual DbSet<ReferalCodes> ReferalCodes { get; set; }
     }
 }

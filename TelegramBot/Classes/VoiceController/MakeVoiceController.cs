@@ -54,5 +54,14 @@ namespace TelegramBot.Classes.VoiceControllers
                     return voice;
             return null;
         }
+
+        public static InstalledVoice FindVoiceByName(string name)
+        {
+            var voices = GetAllVoices();
+            foreach (var voice in voices)
+                if (voice.VoiceInfo.Name == name)
+                    return voice;
+            return null;
+        }
     }
 }

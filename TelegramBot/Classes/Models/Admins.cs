@@ -12,12 +12,13 @@ namespace TelegramBot.Classes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Admins
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string VoicesJSON { get; set; }
+        public string UsersJSON { get; set; }
+        public string Token { get; set; }
     }
 }

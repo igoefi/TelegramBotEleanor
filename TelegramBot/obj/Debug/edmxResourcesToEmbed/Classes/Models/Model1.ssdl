@@ -1,25 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Хранилище BotModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="Admins">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VoicesJSON" Type="text" />
+    <Property Name="UsersJSON" Type="text" />
+    <Property Name="Token" Type="nvarchar" MaxLength="70" />
   </EntityType>
-  <EntityType Name="UserSelectedVoice">
+  <EntityType Name="ReferalCodes">
     <Key>
-      <PropertyRef Name="UserNum" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="UserNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="VoiceId" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsUsed" Type="bit" Nullable="false" />
   </EntityType>
   <EntityContainer Name="Хранилище BotModelContainer">
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserSelectedVoice" EntityType="Self.UserSelectedVoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReferalCodes" EntityType="Self.ReferalCodes" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

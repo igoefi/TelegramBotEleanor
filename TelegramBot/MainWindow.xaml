@@ -5,13 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TelegramBot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    
+    <Border Background="#272537"
+            CornerRadius="25">
     <Grid>
-        <Button HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Width="100"
-                Height="50"
-                Content="Start Bot"
-                Click="BtnClickStartBot"/>
-    </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Orientation="Horizontal">
+
+                <Button HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="15,0,0,0"
+                    BorderThickness="0"
+                    Click="BtnClickExit"
+                    Height="15"
+                    Width="15">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Ellipse Fill="#fc5652"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="10,0,0,0"
+                    BorderThickness="0"
+                    Click="BtnClickHide"
+                    Height="15"
+                    Width="15">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Ellipse Fill="#fdbd3e"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="10,0,0,0"
+                    BorderThickness="0"
+                    Click="BtnClickFullOpen"
+                    Height="15"
+                    Width="15">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Ellipse Fill="#33c94a"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+
+            <Frame NavigationUIVisibility="Hidden"
+                   Grid.Row="1"
+                   Name="FrmMain"/>
+        </Grid>
+    </Border>
+    
 </Window>

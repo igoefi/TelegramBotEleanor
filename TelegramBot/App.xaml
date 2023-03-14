@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:TelegramBot"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/LoginBox.xaml"/>
+                <ResourceDictionary Source="Style/Password.xaml"/>
+                <ResourceDictionary Source="Style/ReferalCode.xaml"/>
+                <ResourceDictionary Source="Style/Token.xaml"/>
+                <ResourceDictionary Source="Style/Message.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
