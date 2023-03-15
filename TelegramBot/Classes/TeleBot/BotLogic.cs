@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,14 +45,13 @@ namespace TelegramBot
         {
             var message = update.Message;
             var result = update.CallbackQuery;
-
             if (message != null)
                 switch (message.Text)
                 {
                     case "/start":
                         await client.SendTextMessageAsync(message.Chat.Id, "Приветствуем в tts боте", cancellationToken: token);
 
-                        DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, MakeVoiceController.GetAllVoices()[0].VoiceInfo.Id);
+                        DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, MakeVoiceController.GetAllVoices()[0].VoiceInfo.Name);
                         return;
 
                     case "/help":
@@ -62,7 +62,7 @@ namespace TelegramBot
                         var voicesJson = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON);
                         if (voicesJson == null)
                         {
-                            await client.SendTextMessageAsync(message.Chat.Id, 
+                            await client.SendTextMessageAsync(message.Chat.Id,
                                 "Голоса ещё не готовы. Дайте нейросети подкрасить носик", cancellationToken: token);
                             return;
                         }
@@ -77,16 +77,25 @@ namespace TelegramBot
                         return;
 
                     default:
-                        string voiceName = DBUserHelper.GetUserSelectedVoice(message.From.Id);
+                        if (message.Text == null) return;
 
+                        string voiceName = DBUserHelper.GetUserSelectedVoice(message.From.Id);
                         if (voiceName == null)
                         {
-                            await client.SendTextMessageAsync(message.Chat.Id, 
+                            await client.SendTextMessageAsync(message.Chat.Id,
                                 "У вас не выбран голос", cancellationToken: token);
                             return;
                         }
                         var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)}" +
                             $"{message.From.Id}sound.ogg";
+
+                        string[] messageStrings = message.Text.Split(' ');
+                        string needMessageString = string.Empty;
+                        if (messageStrings[0].First() == '/')
+                            messageStrings[0] = string.Empty;
+
+                        foreach (var vord in messageStrings)
+                            needMessageString += vord + ' ';
 
                         Stream stream;
                         if (File.Exists(filePath))
@@ -102,20 +111,30 @@ namespace TelegramBot
 
                         }
 
-
                         stream = File.OpenWrite(filePath);
-                        MakeVoiceController.SaveVoice(message.Text,
-                        MakeVoiceController.FindVoiceByID(voiceName).VoiceInfo.Name, stream);
+                        MakeVoiceController.SaveVoice(needMessageString,
+                        MakeVoiceController.FindVoiceByName(voiceName).VoiceInfo.Name, stream);
                         stream.Close();
                         stream = File.OpenRead(filePath);
 
                         var voiceFile = new InputOnlineFile(stream);
                         await _client.SendVoiceAsync(message.Chat.Id, voiceFile, cancellationToken: token);
                         stream.Close();
+
+                        try
+                        {
+                            await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+                        }
+                        catch
+                        {
+
+                        }
                         return;
                 }
             else if (result != null)
+            {
                 DBUserHelper.SelectUserVoice(result.From.Id, result.From.Username, result.Data);
+            }
         }
 
         private Task Error(ITelegramBotClient arg1, Exception exception, CancellationToken arg3)
