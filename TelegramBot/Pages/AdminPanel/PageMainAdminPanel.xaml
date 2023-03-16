@@ -19,7 +19,7 @@
                         <Grid>
                             <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray"
+                                           Fill="#4F5873"
                                            >
                             </Rectangle>
                             <TextBlock Text="Запуск бота"
@@ -40,7 +40,7 @@
                         <Grid>
                             <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray"
+                                           Fill="#4F5873"
                                            >
                             </Rectangle>
                             <TextBlock Text="Настройки"
@@ -61,7 +61,7 @@
                         <Grid>
                             <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray"
+                                           Fill="#4F5873"
                                            >
                             </Rectangle>
                             <TextBlock Text="Отправить сообщение"
@@ -82,7 +82,7 @@
                         <Grid>
                             <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray"
+                                           Fill="#4F5873"
                                            >
                             </Rectangle>
                             <TextBlock Text="Настройка голосов"

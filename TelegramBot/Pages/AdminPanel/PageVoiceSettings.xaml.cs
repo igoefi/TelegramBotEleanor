@@ -64,7 +64,7 @@ namespace TelegramBot.Pages.AdminPanel
         {
             var voiceName = (string)CmbBoxSavedVoices.SelectedItem;
             if (string.IsNullOrEmpty(voiceName)) return;
-            DBAdminHelper.AddSetVoice(MakeVoiceController.FindVoiceByName(voiceName), int.Parse(TxbVoiceCost.Text));
+            //DBAdminHelper.AddSetVoice(MakeVoiceController.FindVoiceByName(voiceName), int.Parse(TxbVoiceCost.Text));
             MessageBox.Show("Save completed");
         }
 
@@ -82,8 +82,8 @@ namespace TelegramBot.Pages.AdminPanel
             if (voice == null) return;
             RnSelectedVoiceName.Text = voice.VoiceInfo.Name;
             RnSelectedVoiceCulture.Text = voice.VoiceInfo.Culture.EnglishName;
-            TxbVoiceCost.Text = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON)
-                .Voices[voice.VoiceInfo.Name].ToString();
+            //TxbVoiceCost.Text = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON)
+            //    .Voices[voice.VoiceInfo.Name].ToString();
         }
 
         private void BtnClickDeleteVoice(object sender, RoutedEventArgs e)

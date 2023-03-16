@@ -24,7 +24,7 @@
                         <Grid>
                             <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray"
+                                           Fill="#4F5873"
                                            >
                             </Rectangle>
                             <TextBlock Text="Сохранить"

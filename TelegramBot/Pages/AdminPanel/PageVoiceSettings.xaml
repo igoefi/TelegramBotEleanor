@@ -20,7 +20,7 @@
 
         <StackPanel Grid.RowSpan="2">
             <TextBlock Text="Добавить"
-                       Foreground="White"
+                       Foreground="#D8D9D7"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center"
                        FontSize="30"/>
@@ -38,14 +38,14 @@
                     MaxWidth="200">
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="White"
+                        Foreground="#D8D9D7"
                         FontSize="17">
                         Название: <Run Name="RnVoiceName"/>
                     </TextBlock>
 
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="White"
+                        Foreground="#D8D9D7"
                         FontSize="17"
                         Margin="0,20,0,0">
                         Озучиваемый язык: <Run Name="RnVoiceCulture"/>
@@ -66,7 +66,7 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray">
+                                           Fill="#4F5873">
                         </Rectangle>
                         <TextBlock Text="Добавить"
                                     HorizontalAlignment="Center"
@@ -78,7 +78,7 @@
 
         <StackPanel Grid.Column="1">
             <TextBlock Text="Изменить"
-                       Foreground="White"
+                       Foreground="#D8D9D7"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center"
                        FontSize="30"/>
@@ -95,14 +95,14 @@
                     MaxWidth="200">
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="White"
+                        Foreground="#D8D9D7"
                         FontSize="17">
                         Название: <Run Name="RnSelectedVoiceName"/>
                     </TextBlock>
 
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="White"
+                        Foreground="#D8D9D7"
                         FontSize="17"
                         Margin="0,20,0,0">
                         Озучиваемый язык: <Run Name="RnSelectedVoiceCulture"/>
@@ -112,26 +112,7 @@
         </StackPanel>
 
         <StackPanel
-            Grid.Row="1"
-            Grid.Column="1"
-            HorizontalAlignment="Left">
-            <TextBlock
-                        TextWrapping="Wrap"
-                        Foreground="White"
-                        FontSize="17"
-                        Margin="0,20,0,0">
-                        Стоимость:
-            </TextBlock>
-            <TextBox
-                Name="TxbVoiceCost"
-                Background="#302550"
-                Foreground="White"
-                Margin="0,12,0,0"
-                
-                />
-        </StackPanel>
-
-        <StackPanel            
+                Orientation="Horizontal"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"            
                 Grid.Row="1"
@@ -146,7 +127,7 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray">
+                                           Fill="#4F5873">
                         </Rectangle>
                         <TextBlock Text="Удалить голос"
                                     HorizontalAlignment="Center"
@@ -166,7 +147,7 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray">
+                                           Fill="#4F5873">
                         </Rectangle>
                         <TextBlock Text="Сохранить"
                                     HorizontalAlignment="Center"
@@ -185,7 +166,7 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="DarkGray">
+                                           Fill="#4F5873">
                         </Rectangle>
                         <TextBlock Text="Назад"
                                     HorizontalAlignment="Center"

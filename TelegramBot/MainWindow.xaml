@@ -10,8 +10,8 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
-    
-    <Border Background="#272537"
+
+    <Border Background="#0D0D0D"
             CornerRadius="25">
     <Grid>
             <Grid.RowDefinitions>
@@ -20,25 +20,26 @@
             </Grid.RowDefinitions>
 
             <StackPanel
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
 
-                <Button HorizontalAlignment="Left"
+                <Button HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="15,0,0,0"
+                    Margin="0,0,10,0"
                     BorderThickness="0"
-                    Click="BtnClickExit"
+                    Click="BtnClickFullOpen"
                     Height="15"
                     Width="15">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Ellipse Fill="#fc5652"/>
+                            <Ellipse Fill="#33c94a"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
 
-                <Button HorizontalAlignment="Left"
+                <Button HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="10,0,0,0"
+                    Margin="0,0,10,0"
                     BorderThickness="0"
                     Click="BtnClickHide"
                     Height="15"
@@ -50,16 +51,16 @@
                     </Button.Template>
                 </Button>
 
-                <Button HorizontalAlignment="Left"
+                <Button HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="10,0,0,0"
+                    Margin="0,0,15,0"
                     BorderThickness="0"
-                    Click="BtnClickFullOpen"
+                    Click="BtnClickExit"
                     Height="15"
                     Width="15">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Ellipse Fill="#33c94a"/>
+                            <Ellipse Fill="#fc5652"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>

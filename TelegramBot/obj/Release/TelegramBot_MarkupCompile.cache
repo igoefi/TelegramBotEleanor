@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-D:\repos\TelegramBot\TelegramBot\obj\Debug\
+D:\repos\TelegramBot\TelegramBot\obj\Release\
 TelegramBot
 none
 false
-DEBUG;TRACE
+TRACE
 D:\repos\TelegramBot\TelegramBot\App.xaml
 12-512846923
 21255135711
@@ -16,5 +16,5 @@ D:\repos\TelegramBot\TelegramBot\App.xaml
 25496514210
 MainWindow.xaml;Pages\AdminPanel\PageBotSettings.xaml;Pages\AdminPanel\PageMainAdminPanel.xaml;Pages\AdminPanel\PageSendMessage.xaml;Pages\AdminPanel\PageVoiceSettings.xaml;Pages\PageCreateUser.xaml;Pages\PageLogin.xaml;Style\Message.xaml;Style\ReferalCode.xaml;Style\Token.xaml;Style\Password.xaml;Style\LoginBox.xaml;
 
-False
+True
 
