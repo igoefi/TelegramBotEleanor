@@ -22,6 +22,8 @@ namespace TelegramBot
     {
         private static TelegramBotClient _client;
 
+        private const string _recomendationInError = "Советую грязно оскорбить разработчиков в уме";
+
         public static bool IsTokenCorrect(string token)
         {
             try
@@ -29,9 +31,9 @@ namespace TelegramBot
                 _client = new TelegramBotClient(token);
                 return true;
             }
-            catch 
-            { 
-                return false; 
+            catch
+            {
+                return false;
             }
         }
 
@@ -49,97 +51,132 @@ namespace TelegramBot
                 switch (message.Text)
                 {
                     case "/start":
-                        await client.SendTextMessageAsync(message.Chat.Id, "Приветствуем в tts боте", cancellationToken: token);
-
+                        await client.SendTextMessageAsync(message.Chat.Id, "Привет, я нейро-бот твоей мечты. " +
+                            "Я умею синтезировать прекрасные голосовые, так что могу заменить тебе реальных людишек", cancellationToken: token);
                         DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, MakeVoiceController.GetAllVoices()[0].VoiceInfo.Name);
-                        return;
+                        break;
 
                     case "/help":
-                        await client.SendTextMessageAsync(message.Chat.Id, "Напишите /voice чтобы выбрать голос", cancellationToken: token);
-                        return;
+                        await client.SendTextMessageAsync(message.Chat.Id, "Напишите /voice " +
+                            "чтобы просмотреть мою прекрасную коллекцию голосов", cancellationToken: token);
+                        break;
 
                     case "/voice":
-                        var voicesJson = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON);
-                        if (voicesJson == null)
-                        {
-                            await client.SendTextMessageAsync(message.Chat.Id,
-                                "Голоса ещё не готовы. Дайте нейросети подкрасить носик", cancellationToken: token);
-                            return;
-                        }
-                        var voicesDictionary = voicesJson.Voices;
-
-                        var voices = new List<InlineKeyboardButton>();
-                        foreach (var IDVoice in voicesDictionary.Keys)
-                            voices.Add(InlineKeyboardButton.WithCallbackData(IDVoice, IDVoice));
-
-                        var inlineKeyboard = new InlineKeyboardMarkup(new[] { voices });
-                        await client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: token);
-                        return;
-
-                    default:
-                        if (message.Text == null) return;
-
-                        string voiceName = DBUserHelper.GetUserSelectedVoice(message.From.Id);
-                        if (voiceName == null)
-                        {
-                            await client.SendTextMessageAsync(message.Chat.Id,
-                                "У вас не выбран голос", cancellationToken: token);
-                            return;
-                        }
-                        var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)}" +
-                            $"{message.From.Id}sound.ogg";
-
-                        string[] messageStrings = message.Text.Split(' ');
-                        string needMessageString = string.Empty;
-                        if (messageStrings[0].First() == '/')
-                            messageStrings[0] = string.Empty;
-
-                        foreach (var vord in messageStrings)
-                            needMessageString += vord + ' ';
-
-                        Stream stream;
-                        if (File.Exists(filePath))
-                        {
-                            try
-                            {
-                                File.Delete(filePath);
-                            }
-                            catch
-                            {
-
-                            }
-
-                        }
-
-                        stream = File.OpenWrite(filePath);
-                        MakeVoiceController.SaveVoice(needMessageString,
-                        MakeVoiceController.FindVoiceByName(voiceName).VoiceInfo.Name, stream);
-                        stream.Close();
-                        stream = File.OpenRead(filePath);
-
-                        var voiceFile = new InputOnlineFile(stream);
-                        await _client.SendVoiceAsync(message.Chat.Id, voiceFile, cancellationToken: token);
-                        stream.Close();
-
                         try
                         {
-                            await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+                            DisplayVoiceInformation(message, client, token);
                         }
                         catch
                         {
-
+                            await client.SendTextMessageAsync(message.Chat.Id,
+                                "Произошла ошибка при выводе прекрасных голосков. " + _recomendationInError, cancellationToken: token);
                         }
-                        return;
+                        break;
+
+                    default:
+                        try
+                        {
+                            CreateAndSendVoice(message, client, token);
+                        }
+                        catch
+                        {
+                            await client.SendTextMessageAsync(message.Chat.Id,
+                                "Произошла ошибка при создании прекрасного голосового. " + _recomendationInError, cancellationToken: token);
+                        }
+                        break;
                 }
             else if (result != null)
             {
-                DBUserHelper.SelectUserVoice(result.From.Id, result.From.Username, result.Data);
+                try
+                {
+                    DBUserHelper.SelectUserVoice(result.From.Id, result.From.Username, result.Data);
+                    await client.SendTextMessageAsync(result.Message.Chat.Id,
+                     $"Выбран голос {result.Data}. Отличный выбор(для человека)", cancellationToken: token);
+                }
+                catch
+                {
+                    await client.SendTextMessageAsync(message.Chat.Id,
+                        "Произошла ошибка при выборе моего прекрасного голоса. " + _recomendationInError, cancellationToken: token);
+                }
             }
         }
 
         private Task Error(ITelegramBotClient arg1, Exception exception, CancellationToken arg3)
         {
             return null;
+        }
+
+        private async void DisplayVoiceInformation(Message message, ITelegramBotClient client, CancellationToken token)
+        {
+            var voicesJson = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON);
+            if (voicesJson == null)
+            {
+                await client.SendTextMessageAsync(message.Chat.Id,
+                    "Голоса ещё не готовы. Дайте нейросети подкрасить носик", cancellationToken: token);
+                return;
+            }
+            var voicesDictionary = voicesJson.Voices;
+
+            var voices = new List<InlineKeyboardButton>();
+            foreach (var IDVoice in voicesDictionary.Keys)
+                voices.Add(InlineKeyboardButton.WithCallbackData(IDVoice, IDVoice));
+
+            var inlineKeyboard = new InlineKeyboardMarkup(new[] { voices });
+            await client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: token);
+        }
+
+        private async void CreateAndSendVoice(Message message, ITelegramBotClient client, CancellationToken token)
+        {
+            if (message.Text == null) return;
+
+            string voiceName = DBUserHelper.GetUserSelectedVoice(message.From.Id);
+            if (voiceName == null)
+            {
+                await client.SendTextMessageAsync(message.Chat.Id,
+                    "У вас не выбран голос", cancellationToken: token);
+                return;
+            }
+            var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)}" +
+                $"{message.From.Id}sound.ogg";
+
+            string[] messageStrings = message.Text.Split(' ');
+            string needMessageString = string.Empty;
+
+            if (messageStrings[0].First() == '/')
+                messageStrings[0] = string.Empty;
+
+            foreach (var vord in messageStrings)
+                needMessageString += vord + ' ';
+
+            needMessageString.Replace('?', '.');
+
+            Stream stream;
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
+            var instVoice = MakeVoiceController.FindVoiceByName(voiceName);
+            if (instVoice == null) return;
+
+            stream = File.OpenWrite(filePath);
+            MakeVoiceController.SaveVoice(needMessageString,
+            MakeVoiceController.FindVoiceByName(voiceName).VoiceInfo.Name, stream);
+            stream.Close();
+            stream = File.OpenRead(filePath);
+
+            var voiceFile = new InputOnlineFile(stream);
+            await _client.SendVoiceAsync(message.Chat.Id, voiceFile, cancellationToken: token);
+            stream.Close();
+
+            try
+            {
+                await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+            }
+            catch
+            {
+
+                await client.SendTextMessageAsync(message.Chat.Id,
+                     "Не удалось удалить сообщение с текстом, но я не унываю!", cancellationToken: token);
+            }
         }
     }
 }
