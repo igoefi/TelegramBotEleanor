@@ -132,10 +132,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AdminPanel\PageSendMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\AdminPanel\PageVoiceSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,9 +171,6 @@
     </Compile>
     <Compile Include="Pages\AdminPanel\PageMainAdminPanel.xaml.cs">
       <DependentUpon>PageMainAdminPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AdminPanel\PageSendMessage.xaml.cs">
-      <DependentUpon>PageSendMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminPanel\PageVoiceSettings.xaml.cs">
       <DependentUpon>PageVoiceSettings.xaml</DependentUpon>

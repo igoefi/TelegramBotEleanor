@@ -46,8 +46,6 @@ L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageMainAdminP
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageMainAdminPanel.baml
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageBotSettings.g.cs
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageBotSettings.baml
-L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageSendMessage.g.cs
-L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageSendMessage.baml
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageVoiceSettings.g.cs
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageVoiceSettings.baml
 D:\repos\TelegramBot\TelegramBot\bin\Debug\TelegramBot.exe.config
