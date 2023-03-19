@@ -53,7 +53,7 @@ namespace TelegramBot
                     case "/start":
                         await client.SendTextMessageAsync(message.Chat.Id, "Привет, я нейро-бот твоей мечты. " +
                             "Я умею синтезировать прекрасные голосовые, так что могу заменить тебе реальных людишек", cancellationToken: token);
-                        DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, MakeVoiceController.GetAllVoices()[0].VoiceInfo.Name);
+                        DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, null);
                         break;
 
                     case "/help":
@@ -91,7 +91,7 @@ namespace TelegramBot
                 {
                     DBUserHelper.SelectUserVoice(result.From.Id, result.From.Username, result.Data);
                     await client.SendTextMessageAsync(result.Message.Chat.Id,
-                     $"Выбран голос {result.Data}. Отличный выбор(для человека)", cancellationToken: token);
+                     $"Выбран голос {result.Data}. Отличный выбор! (для человека)", cancellationToken: token);
                 }
                 catch
                 {
@@ -117,11 +117,13 @@ namespace TelegramBot
             }
             var voicesDictionary = voicesJson.Voices;
 
-            var voices = new List<InlineKeyboardButton>();
-            foreach (var IDVoice in voicesDictionary.Keys)
-                voices.Add(InlineKeyboardButton.WithCallbackData(IDVoice, IDVoice));
+            var voices = new List<List<InlineKeyboardButton>>();
 
-            var inlineKeyboard = new InlineKeyboardMarkup(new[] { voices });
+            foreach (var voiceName in voicesDictionary.Keys)
+                voices.Add(new List<InlineKeyboardButton> { InlineKeyboardButton.WithCallbackData(voiceName, voiceName) });
+
+
+            var inlineKeyboard = new InlineKeyboardMarkup( voices );
             await client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: token);
         }
 
