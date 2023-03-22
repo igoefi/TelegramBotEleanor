@@ -28,12 +28,13 @@
                             <Grid>
                                 <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="#4F5873"
+                                           Fill="#609966"
                                            >
                                 </Rectangle>
                                 <TextBlock Text="Вход"
                                            HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center"
+                                           Foreground="#EDF1D6"/>
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>
@@ -48,12 +49,13 @@
                             <Grid>
                                 <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="#4F5873"
+                                           Fill="#609966"
                                            >
                                 </Rectangle>
                                 <TextBlock Text="Регистрация"
                                            HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center"
+                                           Foreground="#EDF1D6"/>
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>

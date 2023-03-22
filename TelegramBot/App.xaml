@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Style/Password.xaml"/>
                 <ResourceDictionary Source="Style/ReferalCode.xaml"/>
                 <ResourceDictionary Source="Style/Token.xaml"/>
-                <ResourceDictionary Source="Style/Message.xaml"/>
+                <ResourceDictionary Source="Style/ComboBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

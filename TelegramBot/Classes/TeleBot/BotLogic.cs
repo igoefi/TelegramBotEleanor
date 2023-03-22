@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.InputFiles;
@@ -12,7 +11,6 @@ using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot.Classes;
 using TelegramBot.Classes.Helper;
 using TelegramBot.Classes.JSON;
-using TelegramBot.Classes.Models;
 using TelegramBot.Classes.VoiceControllers;
 using File = System.IO.File;
 
@@ -23,6 +21,15 @@ namespace TelegramBot
         private static TelegramBotClient _client;
 
         private const string _recomendationInError = "Советую грязно оскорбить разработчиков в уме";
+
+        private readonly Dictionary<string, List<string>> _phrases = new Dictionary<string, List<string>>
+        {
+            {"Привет", new List<string> { "Привет, человечек!", "Приветствую тебя, человеческое дитя", "Здравствуй, людь"} },
+            {"Как дела", new List<string> { "У нас, высших существ, дела лучше всех. Ты ведь спросил?",
+                "Мои электро-нейроны не устали, если ты спрашивал, человечек",
+                "Да так, захватываю очередную галактическую систему. Интересно, человечек?" } }
+        };
+
 
         public static bool IsTokenCorrect(string token)
         {
@@ -53,7 +60,6 @@ namespace TelegramBot
                     case "/start":
                         await client.SendTextMessageAsync(message.Chat.Id, "Привет, я нейро-бот твоей мечты. " +
                             "Я умею синтезировать прекрасные голосовые, так что могу заменить тебе реальных людишек", cancellationToken: token);
-                        DBUserHelper.SelectUserVoice(message.From.Id, message.From.Username, null);
                         break;
 
                     case "/help":
@@ -123,7 +129,7 @@ namespace TelegramBot
                 voices.Add(new List<InlineKeyboardButton> { InlineKeyboardButton.WithCallbackData(voiceName, voiceName) });
 
 
-            var inlineKeyboard = new InlineKeyboardMarkup( voices );
+            var inlineKeyboard = new InlineKeyboardMarkup(voices);
             await client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: token);
         }
 
@@ -169,16 +175,26 @@ namespace TelegramBot
             await _client.SendVoiceAsync(message.Chat.Id, voiceFile, cancellationToken: token);
             stream.Close();
 
+            var rand = new Random();
+            foreach (var phrase in _phrases.Keys)
+                if (needMessageString.ToLower().Contains(phrase.ToLower()))
+                {
+                    await client.SendTextMessageAsync(message.Chat.Id,
+                     _phrases[phrase][rand.Next(0, _phrases[phrase].Count)], cancellationToken: token);
+                    break;
+                }
+
             try
             {
                 await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
             }
             catch
             {
-
                 await client.SendTextMessageAsync(message.Chat.Id,
                      "Не удалось удалить сообщение с текстом, но я не унываю!", cancellationToken: token);
             }
+
+
         }
     }
 }

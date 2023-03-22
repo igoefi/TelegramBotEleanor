@@ -6,7 +6,7 @@ namespace TelegramBot.Classes.Helper
     {
         static public string SerializeObject(object obj)
         {
-            if(obj == null) return null;
+            if (obj == null) return null;
             return JsonConvert.SerializeObject(obj);
         }
 

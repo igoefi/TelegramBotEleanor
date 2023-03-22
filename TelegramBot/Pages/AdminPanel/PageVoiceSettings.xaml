@@ -18,41 +18,44 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.RowSpan="2">
+        <Grid>
             <TextBlock Text="Добавить"
-                       Foreground="#D8D9D7"
+                        Foreground="#EDF1D6"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center"
                        FontSize="30"/>
 
+            <ComboBox Name="CmbBoxAllVoices"
+                     SelectionChanged="CmbBoxChangedChangeVoice"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Width="100"
+                     MaxWidth="150"
+                     Margin="10,0,0,0"
+                     Style="{StaticResource ComboBoxTest2}"/>
+
             <Grid
-                Margin="20,30,0,0">
-                <ComboBox Name="CmbBoxAllVoices"
-                          SelectionChanged="CmbBoxChangedAddVoice"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
-                          Width="100"
-                          MaxWidth="150"/>
+                Margin="0,70,50,0">
                 <StackPanel
                         HorizontalAlignment="Right"
                     MaxWidth="200">
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="#D8D9D7"
+                        Foreground="#EDF1D6"
                         FontSize="17">
                         Название: <Run Name="RnVoiceName"/>
                     </TextBlock>
 
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="#D8D9D7"
+                        Foreground="#EDF1D6"
                         FontSize="17"
                         Margin="0,20,0,0">
                         Озучиваемый язык: <Run Name="RnVoiceCulture"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <Button Click="BtnClickAddVoice"
                 BorderBrush="Transparent"
@@ -66,50 +69,55 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="#4F5873">
+                                           Fill="#609966">
                         </Rectangle>
                         <TextBlock Text="Добавить"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center"
+                                           Foreground="#EDF1D6"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
-        <StackPanel Grid.Column="1">
-            <TextBlock Text="Изменить"
+        <Grid Grid.Column="1">
+            <TextBlock Text="Удалить"
                        Foreground="#D8D9D7"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center"
                        FontSize="30"/>
+
+            <ComboBox   Name="CmbBoxSavedVoices"
+                        SelectionChanged="CmbBoxChangedChangeVoice"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Width="100"
+                        MaxWidth="150"
+                        Foreground="#EDF1D6"
+                        Style="{StaticResource ComboBoxTest2}"/>
+
             <Grid
-                Margin="20,30,0,0">
-                <ComboBox Name="CmbBoxSavedVoices"
-                          SelectionChanged="CmbBoxChangedChangeVoice"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
-                          Width="100"
-                          MaxWidth="150"/>
+                Margin="0,70,50,0">
                 <StackPanel
                         HorizontalAlignment="Right"
                     MaxWidth="200">
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="#D8D9D7"
+                        Foreground="#EDF1D6"
                         FontSize="17">
                         Название: <Run Name="RnSelectedVoiceName"/>
                     </TextBlock>
 
                     <TextBlock
                         TextWrapping="Wrap"
-                        Foreground="#D8D9D7"
+                        Foreground="#EDF1D6"
                         FontSize="17"
                         Margin="0,20,0,0">
                         Озучиваемый язык: <Run Name="RnSelectedVoiceCulture"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <StackPanel
                 Orientation="Horizontal"
@@ -117,27 +125,28 @@
                 HorizontalAlignment="Right"            
                 Grid.Row="1"
                 Grid.Column="1">
-        <Button Click="BtnClickDeleteVoice"
+            <Button Click="BtnClickDeleteVoice"
                 BorderBrush="Transparent"
                 Width="100"
                 Height="30"
                 Margin="0,0,10,20">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Rectangle RadiusX="8"
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="#4F5873">
-                        </Rectangle>
-                        <TextBlock Text="Удалить голос"
+                                           Fill="#609966">
+                            </Rectangle>
+                            <TextBlock Text="Удалить голос"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+                                    VerticalAlignment="Center"
+                                           Foreground="#EDF1D6"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             
-        <Button Click="BtnClickSaveChanges"
+            <Button Click="BtnClickGoBack"
                 BorderBrush="Transparent"
                 Width="100"
                 Height="30"
@@ -147,30 +156,12 @@
                     <Grid>
                         <Rectangle RadiusX="8"
                                            RadiusY="5"
-                                           Fill="#4F5873">
-                        </Rectangle>
-                        <TextBlock Text="Сохранить"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-        <Button Click="BtnClickGoBack"
-                BorderBrush="Transparent"
-                Width="100"
-                Height="30"
-                Margin="0,0,10,20">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Rectangle RadiusX="8"
-                                           RadiusY="5"
-                                           Fill="#4F5873">
+                                           Fill="#609966">
                         </Rectangle>
                         <TextBlock Text="Назад"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center"
+                                           Foreground="#EDF1D6"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Windows;
+﻿using System.Collections.Generic;
 using TelegramBot.Classes.Helper;
 using TelegramBot.Classes.JSON;
-using TelegramBot.Classes.Models;
 
 namespace TelegramBot.Classes
 {
@@ -31,7 +26,7 @@ namespace TelegramBot.Classes
 
         private static void CreateUser(long userID, string userName, string voiceName, List<UserEntity> users)
         {
-            if(users == null) users = new List<UserEntity>();
+            if (users == null) users = new List<UserEntity>();
             users.Add(new UserEntity() { Coins = _numFirstCoins, ID = userID, SelectedVoice = voiceName, Name = userName });
             AdminProfileSaver.Admin.UsersJSON = JSONSerializeController.SerializeObject(new UsersJSON { Users = users });
             AdminProfileSaver.SaveChanges();

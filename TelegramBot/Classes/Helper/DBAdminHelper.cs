@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Windows;
-using Telegram.Bot.Types;
 using TelegramBot.Classes.JSON;
 using TelegramBot.Classes.Models;
 

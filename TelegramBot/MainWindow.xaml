@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TelegramBot"
         mc:Ignorable="d"
-        Height="600" Width="920"
+        Height="500" Width="766"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
 
-    <Border Background="#0D0D0D"
+    <Border Background="#9DC08B"
             CornerRadius="25">
     <Grid>
             <Grid.RowDefinitions>
@@ -19,23 +19,14 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <Rectangle
+            Fill="#EDF1D6"
+            RadiusX="8"
+                RadiusY="8"/>
+
             <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
-
-                <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0,0,10,0"
-                    BorderThickness="0"
-                    Click="BtnClickFullOpen"
-                    Height="15"
-                    Width="15">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Ellipse Fill="#33c94a"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
 
                 <Button HorizontalAlignment="Right"
                     VerticalAlignment="Center"

@@ -33,7 +33,6 @@ L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\TelegramBot.csproj.CopyComplete
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\TelegramBot.exe
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\TelegramBot.pdb
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\App.baml
-L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\Message.baml
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\ReferalCode.baml
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\Token.baml
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\Password.baml
@@ -100,3 +99,4 @@ D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.csproj.CoreCompileInputs.
 D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.csproj.CopyComplete
 D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.exe
 D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.pdb
+L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\ComboBoxStyle.baml

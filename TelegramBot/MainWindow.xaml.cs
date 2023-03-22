@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TelegramBot.Classes;
 using TelegramBot.Classes.Helper;
 using TelegramBot.Pages;
 
@@ -33,14 +20,14 @@ namespace TelegramBot
         private void BtnClickExit(object sender, RoutedEventArgs e) =>
             Application.Current.Shutdown();
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) =>
-            DragMove();
-
         private void BtnClickHide(object sender, RoutedEventArgs e) =>
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) =>
+            DragMove();
+
         private void BtnClickFullOpen(object sender, RoutedEventArgs e) =>
-            Application.Current.MainWindow.WindowState = Application.Current.MainWindow.WindowState == WindowState.Normal 
+            Application.Current.MainWindow.WindowState = Application.Current.MainWindow.WindowState == WindowState.Normal
             ? WindowState.Maximized : WindowState.Normal;
     }
 }
