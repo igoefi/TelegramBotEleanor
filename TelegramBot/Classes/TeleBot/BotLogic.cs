@@ -11,6 +11,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot.Classes;
 using TelegramBot.Classes.Helper;
 using TelegramBot.Classes.JSON;
+using TelegramBot.Classes.Models;
 using TelegramBot.Classes.VoiceControllers;
 using File = System.IO.File;
 
@@ -21,15 +22,6 @@ namespace TelegramBot
         private static TelegramBotClient _client;
 
         private const string _recomendationInError = "Советую грязно оскорбить разработчиков в уме";
-
-        private readonly Dictionary<string, List<string>> _phrases = new Dictionary<string, List<string>>
-        {
-            {"Привет", new List<string> { "Привет, человечек!", "Приветствую тебя, человеческое дитя", "Здравствуй, людь"} },
-            {"Как дела", new List<string> { "У нас, высших существ, дела лучше всех. Ты ведь спросил?",
-                "Мои электро-нейроны не устали, если ты спрашивал, человечек",
-                "Да так, захватываю очередную галактическую систему. Интересно, человечек?" } }
-        };
-
 
         public static bool IsTokenCorrect(string token)
         {
@@ -176,11 +168,18 @@ namespace TelegramBot
             stream.Close();
 
             var rand = new Random();
-            foreach (var phrase in _phrases.Keys)
+
+            var answers = DataBaseCC.ConnectContext.QuestionAnswer.ToList();
+            var phrases = new Dictionary<string, List<string>>();
+
+            foreach (var QA in answers)
+                phrases.Add(QA.Question, JSONSerializeController.DeserializeObject<List<string>>(QA.AnswersJSON));
+
+            foreach (var phrase in phrases.Keys)
                 if (needMessageString.ToLower().Contains(phrase.ToLower()))
                 {
                     await client.SendTextMessageAsync(message.Chat.Id,
-                     _phrases[phrase][rand.Next(0, _phrases[phrase].Count)], cancellationToken: token);
+                     phrases[phrase][rand.Next(0, phrases[phrase].Count)], cancellationToken: token);
                     break;
                 }
 

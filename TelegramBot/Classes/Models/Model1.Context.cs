@@ -26,6 +26,7 @@ namespace TelegramBot.Classes.Models
         }
     
         public virtual DbSet<Admins> Admins { get; set; }
+        public virtual DbSet<QuestionAnswer> QuestionAnswer { get; set; }
         public virtual DbSet<ReferalCodes> ReferalCodes { get; set; }
     }
 }

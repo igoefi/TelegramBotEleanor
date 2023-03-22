@@ -16,6 +16,14 @@
           <Property Name="UsersJSON" Type="text" />
           <Property Name="Token" Type="nvarchar" MaxLength="70" />
         </EntityType>
+        <EntityType Name="QuestionAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AnswersJSON" Type="text" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReferalCodes">
           <Key>
             <PropertyRef Name="Id" />
@@ -26,6 +34,7 @@
         </EntityType>
         <EntityContainer Name="Хранилище BotModelContainer">
           <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionAnswer" EntityType="Self.QuestionAnswer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalCodes" EntityType="Self.ReferalCodes" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -34,6 +43,7 @@
       <Schema Namespace="BotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BotEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="BotModel.Admins" />
+          <EntitySet Name="QuestionAnswer" EntityType="BotModel.QuestionAnswer" />
           <EntitySet Name="ReferalCodes" EntityType="BotModel.ReferalCodes" />
         </EntityContainer>
         <EntityType Name="Admins">
@@ -46,6 +56,14 @@
           <Property Name="VoicesJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UsersJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Token" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="QuestionAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AnswersJSON" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ReferalCodes">
           <Key>
@@ -70,6 +88,15 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionAnswer">
+            <EntityTypeMapping TypeName="BotModel.QuestionAnswer">
+              <MappingFragment StoreEntitySet="QuestionAnswer">
+                <ScalarProperty Name="AnswersJSON" ColumnName="AnswersJSON" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

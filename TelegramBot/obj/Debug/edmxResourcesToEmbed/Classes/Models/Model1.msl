@@ -13,6 +13,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="QuestionAnswer">
+      <EntityTypeMapping TypeName="BotModel.QuestionAnswer">
+        <MappingFragment StoreEntitySet="QuestionAnswer">
+          <ScalarProperty Name="AnswersJSON" ColumnName="AnswersJSON" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ReferalCodes">
       <EntityTypeMapping TypeName="BotModel.ReferalCodes">
         <MappingFragment StoreEntitySet="ReferalCodes">
