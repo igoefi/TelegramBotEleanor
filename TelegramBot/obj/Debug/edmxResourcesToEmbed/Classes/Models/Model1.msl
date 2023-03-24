@@ -13,6 +13,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Alerts">
+      <EntityTypeMapping TypeName="BotModel.Alerts">
+        <MappingFragment StoreEntitySet="Alerts">
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="QuestionAnswer">
       <EntityTypeMapping TypeName="BotModel.QuestionAnswer">
         <MappingFragment StoreEntitySet="QuestionAnswer">

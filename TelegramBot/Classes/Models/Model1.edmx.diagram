@@ -6,8 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="52d269ff8d9440fc9b792a6802d44885" Name="Diagram1">
         <EntityTypeShape EntityType="BotModel.Admins" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="BotModel.QuestionAnswer" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="BotModel.ReferalCodes" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BotModel.Alerts" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BotModel.QuestionAnswer" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BotModel.ReferalCodes" Width="1.5" PointX="2.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

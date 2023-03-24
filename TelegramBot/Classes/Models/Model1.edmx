@@ -16,13 +16,21 @@
           <Property Name="UsersJSON" Type="text" />
           <Property Name="Token" Type="nvarchar" MaxLength="70" />
         </EntityType>
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="QuestionAnswer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Question" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="AnswersJSON" Type="text" Nullable="false" />
+          <Property Name="AnswersJSON" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="ReferalCodes">
           <Key>
@@ -34,6 +42,7 @@
         </EntityType>
         <EntityContainer Name="Хранилище BotModelContainer">
           <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionAnswer" EntityType="Self.QuestionAnswer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalCodes" EntityType="Self.ReferalCodes" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -43,6 +52,7 @@
       <Schema Namespace="BotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BotEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="BotModel.Admins" />
+          <EntitySet Name="Alerts" EntityType="BotModel.Alerts" />
           <EntitySet Name="QuestionAnswer" EntityType="BotModel.QuestionAnswer" />
           <EntitySet Name="ReferalCodes" EntityType="BotModel.ReferalCodes" />
         </EntityContainer>
@@ -57,13 +67,21 @@
           <Property Name="UsersJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Token" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="QuestionAnswer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Question" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AnswersJSON" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AnswersJSON" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReferalCodes">
           <Key>
@@ -87,6 +105,15 @@
                 <ScalarProperty Name="VoicesJSON" ColumnName="VoicesJSON" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="BotModel.Alerts">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

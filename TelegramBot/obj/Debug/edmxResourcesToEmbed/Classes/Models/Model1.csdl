@@ -2,6 +2,7 @@
 <Schema Namespace="BotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="BotEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Admins" EntityType="BotModel.Admins" />
+    <EntitySet Name="Alerts" EntityType="BotModel.Alerts" />
     <EntitySet Name="QuestionAnswer" EntityType="BotModel.QuestionAnswer" />
     <EntitySet Name="ReferalCodes" EntityType="BotModel.ReferalCodes" />
   </EntityContainer>
@@ -16,13 +17,21 @@
     <Property Name="UsersJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Token" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="Alerts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Text" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="QuestionAnswer">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Question" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="AnswersJSON" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AnswersJSON" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ReferalCodes">
     <Key>

@@ -11,13 +11,21 @@
     <Property Name="UsersJSON" Type="text" />
     <Property Name="Token" Type="nvarchar" MaxLength="70" />
   </EntityType>
+  <EntityType Name="Alerts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
   <EntityType Name="QuestionAnswer">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Question" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="AnswersJSON" Type="text" Nullable="false" />
+    <Property Name="AnswersJSON" Type="nvarchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="ReferalCodes">
     <Key>
@@ -29,6 +37,7 @@
   </EntityType>
   <EntityContainer Name="Хранилище BotModelContainer">
     <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QuestionAnswer" EntityType="Self.QuestionAnswer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalCodes" EntityType="Self.ReferalCodes" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

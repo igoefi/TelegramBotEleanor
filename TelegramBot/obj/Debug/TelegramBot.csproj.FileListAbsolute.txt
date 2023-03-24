@@ -100,3 +100,5 @@ D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.csproj.CopyComplete
 D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.exe
 D:\repos\TelegramBot\TelegramBot\obj\Debug\TelegramBot.pdb
 L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Style\ComboBoxStyle.baml
+L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageSendMessage.g.cs
+L:\TelegramBot\TelegramBot\TelegramBot\obj\Debug\Pages\AdminPanel\PageSendMessage.baml

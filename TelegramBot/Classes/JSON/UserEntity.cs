@@ -3,8 +3,7 @@
     public class UserEntity
     {
         public string SelectedVoice;
-        public int Coins;
         public long ID;
-        public string Name;
+        public bool IsSubscribed = false;
     }
 }

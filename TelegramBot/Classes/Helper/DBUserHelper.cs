@@ -6,14 +6,40 @@ namespace TelegramBot.Classes
 {
     public class DBUserHelper
     {
-        private const int _numFirstCoins = 100;
         public static void SelectUserVoice(long userID, string userName, string voiceName)
         {
             var users = GetUsers();
             if (users == null || FindUser(userID, users) == null)
-                CreateUser(userID, userName, voiceName, users);
+                CreateUser(userID, voiceName, users);
             else
                 SelectUserVoiceInDB(userID, voiceName, users);
+        }
+
+        public static void SelectUserSubInDB(long userID)
+        {
+            var users = GetUsers();
+            if (users == null)
+                users = new List<UserEntity>
+                {
+                    new UserEntity() { IsSubscribed = true, ID = userID}
+                };
+            else
+                foreach (var user in users)
+                    if (user.ID == userID)
+                        user.IsSubscribed = !user.IsSubscribed;
+
+            AdminProfileSaver.Admin.UsersJSON = JSONSerializeController.SerializeObject(new UsersJSON { Users = users });
+            AdminProfileSaver.SaveChanges();
+        }
+
+        public static string GetUserSelectedVoice(long userID)
+        {
+            var users = GetUsers();
+            if (users == null) return null;
+            foreach (var user in users)
+                if (user.ID == userID)
+                    return user.SelectedVoice;
+            return null;
         }
 
         private static UserEntity FindUser(long ID, List<UserEntity> users)
@@ -24,10 +50,10 @@ namespace TelegramBot.Classes
             return null;
         }
 
-        private static void CreateUser(long userID, string userName, string voiceName, List<UserEntity> users)
+        private static void CreateUser(long userID, string voiceName, List<UserEntity> users)
         {
             if (users == null) users = new List<UserEntity>();
-            users.Add(new UserEntity() { Coins = _numFirstCoins, ID = userID, SelectedVoice = voiceName, Name = userName });
+            users.Add(new UserEntity() { ID = userID, SelectedVoice = voiceName});
             AdminProfileSaver.Admin.UsersJSON = JSONSerializeController.SerializeObject(new UsersJSON { Users = users });
             AdminProfileSaver.SaveChanges();
         }
@@ -41,17 +67,8 @@ namespace TelegramBot.Classes
             AdminProfileSaver.Admin.UsersJSON = JSONSerializeController.SerializeObject(new UsersJSON { Users = users });
             AdminProfileSaver.SaveChanges();
         }
-        public static string GetUserSelectedVoice(long userID)
-        {
-            var users = GetUsers();
-            if (users == null) return null;
-            foreach (var user in users)
-                if (user.ID == userID)
-                    return user.SelectedVoice;
-            return null;
-        }
 
-        private static List<UserEntity> GetUsers()
+        public static List<UserEntity> GetUsers()
         {
             var users = JSONSerializeController.DeserializeObject<UsersJSON>(AdminProfileSaver.Admin.UsersJSON);
             if (users == null) return null;

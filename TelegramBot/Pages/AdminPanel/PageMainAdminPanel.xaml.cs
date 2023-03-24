@@ -34,5 +34,8 @@ namespace TelegramBot.Pages.AdminPanel
 
         private void BtnClickGoVoiceSettings(object sender, RoutedEventArgs e) =>
             FrameNav.FrameNavigation.Navigate(new PageVoiceSettings());
+
+        private void BtnClickGoSendMessage(object sender, RoutedEventArgs e) =>
+            FrameNav.FrameNavigation.Navigate(new PageSendMessage());
     }
 }
