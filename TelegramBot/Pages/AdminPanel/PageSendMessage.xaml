@@ -40,10 +40,6 @@
             Style="{StaticResource ComboBoxTest2}"
             SelectedIndex="0"
             SelectionChanged="CmbBoxChangedPlace">
-            <ComboBoxItem Content="На Тушинской"/>
-            <ComboBoxItem Content="На Технополисе"/>
-            <ComboBoxItem Content="На Лодочной"/>
-            <ComboBoxItem Content="На Стратонавтов"/>
         </ComboBox>
 
         <StackPanel

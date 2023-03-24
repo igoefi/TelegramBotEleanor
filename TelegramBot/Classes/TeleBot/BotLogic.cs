@@ -39,13 +39,16 @@ namespace TelegramBot
             }
         }
 
-        public void StartBot(string token)
+        public void StartBot(string token) =>
+            Start(token);
+
+        private static void Start(string token)
         {
             _client = new TelegramBotClient(token);
             _client.StartReceiving(Upd, Error);
         }
 
-        async private Task Upd(ITelegramBotClient client, Update update, CancellationToken token)
+        async static private Task Upd(ITelegramBotClient client, Update update, CancellationToken token)
         {
             //Ужаснейший костыль, но время жестоко
             _token = token;
@@ -68,7 +71,7 @@ namespace TelegramBot
                     case "/voice":
                         try
                         {
-                            DisplayVoiceInformation(message, client, token);
+                            DisplayVoiceInformation(message);
                         }
                         catch
                         {
@@ -95,7 +98,27 @@ namespace TelegramBot
                     default:
                         try
                         {
-                            CreateAndSendVoice(message, client, token);
+                            string voiceName = DBUserHelper.GetUserSelectedVoice(message.Chat.Id);
+                            if (voiceName == null)
+                            {
+                                await client.SendTextMessageAsync(message.Chat.Id,
+                                    "У вас не выбран голос", cancellationToken: token);
+                                return;
+                            }
+
+                            CreateAndSendVoice(message.Text, message.Chat.Id, voiceName);
+
+                            SendRandomAnswer(message.Text, message.Chat.Id);
+
+                            try
+                            {
+                                await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+                            }
+                            catch
+                            {
+                                await client.SendTextMessageAsync(message.Chat.Id,
+                                     "Не удалось удалить сообщение с текстом, но я не унываю!", cancellationToken: token);
+                            }
                         }
                         catch
                         {
@@ -120,21 +143,56 @@ namespace TelegramBot
             }
         }
 
-        private Task Error(ITelegramBotClient arg1, Exception exception, CancellationToken arg3)
+        private static Task Error(ITelegramBotClient arg1, Exception exception, CancellationToken arg3)
         {
+            MessageBox.Show("Произошла ошибка при работе бота. Подробнее:" + exception.Message.ToString());           
+
             return null;
         }
 
-        private void Subscribe(long chatID) =>
+        public async static void SendMessage(string message)
+        {
+            if (_token == null || _client == null)
+            {
+                if (string.IsNullOrWhiteSpace(AdminProfileSaver.Admin.Token))
+                {
+                    MessageBox.Show("Сначала укажите токен");
+                    return;
+                }
+                Start(AdminProfileSaver.Admin.Token);
+            }
+
+            var users = DBUserHelper.GetUsers();
+            if (users == null)
+            {
+                MessageBox.Show("Некому отправлять сообщение");
+                return;
+            }
+
+            var subscribedUsers = new Dictionary<long, string>();
+            foreach (var user in users)
+                if (user.IsSubscribed)
+                    subscribedUsers.Add(user.ID, user.SelectedVoice);
+
+            foreach (var ID in subscribedUsers.Keys)
+            {
+                await _client.SendTextMessageAsync(ID, message, cancellationToken: _token);
+
+                CreateAndSendVoice(message, ID, subscribedUsers[ID]);
+            }
+
+        }
+
+        private static void Subscribe(long chatID) =>
             DBUserHelper.SelectUserSubInDB(chatID);
 
-        private async void DisplayVoiceInformation(Message message, ITelegramBotClient client, CancellationToken token)
+        private async static void DisplayVoiceInformation(Message message)
         {
             var voicesJson = JSONSerializeController.DeserializeObject<VoicesJSON>(AdminProfileSaver.Admin.VoicesJSON);
             if (voicesJson == null)
             {
-                await client.SendTextMessageAsync(message.Chat.Id,
-                    "Голоса ещё не готовы. Дайте нейросети подкрасить носик", cancellationToken: token);
+                await _client.SendTextMessageAsync(message.Chat.Id,
+                    "Голоса ещё не готовы. Дайте нейросети подкрасить носик", cancellationToken: _token);
                 return;
             }
             var voicesDictionary = voicesJson.Voices;
@@ -146,24 +204,17 @@ namespace TelegramBot
 
 
             var inlineKeyboard = new InlineKeyboardMarkup(voices);
-            await client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: token);
+            await _client.SendTextMessageAsync(message.Chat.Id, "Выберите голос", replyMarkup: inlineKeyboard, cancellationToken: _token);
         }
 
-        private async void CreateAndSendVoice(Message message,  ITelegramBotClient client, CancellationToken token)
+        private async static void CreateAndSendVoice(string message, long chatID, string voiceName)
         {
             if (message == null) return;
 
-            string voiceName = DBUserHelper.GetUserSelectedVoice(message.Chat.Id);
-            if (voiceName == null)
-            {
-                await client.SendTextMessageAsync(message.Chat.Id,
-                    "У вас не выбран голос", cancellationToken: token);
-                return;
-            }
             var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)}" +
-                $"{message.From.Id}sound.ogg";
+                $"{chatID}sound.ogg";
 
-            string[] messageStrings = message.Text.Split(' ');
+            string[] messageStrings = message.Split(' ');
             string needMessageString = string.Empty;
 
             if (messageStrings[0].First() == '/')
@@ -188,9 +239,12 @@ namespace TelegramBot
             stream = File.OpenRead(filePath);
 
             var voiceFile = new InputOnlineFile(stream);
-            await _client.SendVoiceAsync(message.Chat.Id, voiceFile, cancellationToken: token);
+            await _client.SendVoiceAsync(chatID, voiceFile, cancellationToken: _token);
             stream.Close();
+        }
 
+        private async static void SendRandomAnswer(string message, long chatID)
+        {
             var rand = new Random();
 
             var answers = DataBaseCC.ConnectContext.QuestionAnswer.ToList();
@@ -200,85 +254,12 @@ namespace TelegramBot
                 phrases.Add(QA.Question, JSONSerializeController.DeserializeObject<List<string>>(QA.AnswersJSON));
 
             foreach (var phrase in phrases.Keys)
-                if (needMessageString.ToLower().Contains(phrase.ToLower()))
+                if (message.ToLower().Contains(phrase.ToLower()))
                 {
-                    await client.SendTextMessageAsync(message.Chat.Id,
-                     phrases[phrase][rand.Next(0, phrases[phrase].Count)], cancellationToken: token);
+                    await _client.SendTextMessageAsync(chatID,
+                     phrases[phrase][rand.Next(0, phrases[phrase].Count)], cancellationToken: _token);
                     break;
                 }
-
-            try
-            {
-                await client.DeleteMessageAsync(message.Chat.Id, message.MessageId);
-            }
-            catch
-            {
-                await client.SendTextMessageAsync(message.Chat.Id,
-                     "Не удалось удалить сообщение с текстом, но я не унываю!", cancellationToken: token);
-            }
-
-
-        }
-
-        public async static void SendMessage(string message)
-        {
-            if(_token == null || _client == null)
-            {
-                MessageBox.Show("Сначала запустите бота");
-                return;
-            }
-
-            var users = DBUserHelper.GetUsers();
-            if(users == null)
-            {
-                MessageBox.Show("Некому отправлять бота");
-                return;
-            }
-
-            var subscribedUsers = new Dictionary<long, string>();
-            foreach (var user in users)
-                if (user.IsSubscribed)
-                    subscribedUsers.Add(user.ID, user.SelectedVoice);
-
-            foreach(var ID in subscribedUsers.Keys)
-            {
-                await _client.SendTextMessageAsync(ID, message, cancellationToken: _token);
-
-                string voiceName = DBUserHelper.GetUserSelectedVoice(ID);
-                if (voiceName == null) return;
-
-                var filePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)}" +
-                    $"{ID}sound.ogg";
-
-                string[] messageStrings = message.Split(' ');
-                string needMessageString = string.Empty;
-
-                if (messageStrings[0].First() == '/')
-                    messageStrings[0] = string.Empty;
-
-                foreach (var vord in messageStrings)
-                    needMessageString += vord + ' ';
-
-                needMessageString.Replace('?', '.');
-
-                Stream stream;
-                if (File.Exists(filePath))
-                    File.Delete(filePath);
-
-                var instVoice = MakeVoiceController.FindVoiceByName(voiceName);
-                if (instVoice == null) return;
-
-                stream = File.OpenWrite(filePath);
-                MakeVoiceController.SaveVoice(needMessageString,
-                MakeVoiceController.FindVoiceByName(voiceName).VoiceInfo.Name, stream);
-                stream.Close();
-                stream = File.OpenRead(filePath);
-
-                var voiceFile = new InputOnlineFile(stream);
-                await _client.SendVoiceAsync(ID, voiceFile, cancellationToken: _token);
-                stream.Close();
-            }
-
         }
     }
 }

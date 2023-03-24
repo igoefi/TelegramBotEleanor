@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TelegramBot.Classes.Helper;
 using TelegramBot.Classes.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TelegramBot.Pages.AdminPanel
 {
@@ -22,9 +23,18 @@ namespace TelegramBot.Pages.AdminPanel
     /// </summary>
     public partial class PageSendMessage : Page
     {
+        private List<string> _placesSource = new List<string>
+        {
+            "На Тушинской",
+            "На Технополисе",
+            "На Лодочной",
+            "На Стратонавтов"
+        };
+
         public PageSendMessage()
         {
             InitializeComponent();
+
             var alerts = DataBaseCC.ConnectContext.Alerts.ToList();
             var alertsText = new List<string>();
 
@@ -32,11 +42,7 @@ namespace TelegramBot.Pages.AdminPanel
                 alertsText.Add(alert.Name);
 
             CmbBoxAlerts.ItemsSource = alertsText;
-        }
-
-        private void BtnClickAlert(object sender, RoutedEventArgs e)
-        {
-
+            CmbBoxPlaceName.ItemsSource = _placesSource;
         }
 
         private void BtnClickGoBack(object sender, RoutedEventArgs e) =>
@@ -77,8 +83,7 @@ namespace TelegramBot.Pages.AdminPanel
         private void CmbBoxChangedPlace(object sender, SelectionChangedEventArgs e)
         {
             if (TxbAlert == null) return;
-
-            TxbAlert.Text = CmbBoxPlaceName.Text;
+            TxbAlert.Text = (string)CmbBoxPlaceName.SelectedItem;
         }
     }
 }
